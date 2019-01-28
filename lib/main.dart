@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tea_app/pages/first.dart';
 import 'package:tea_app/pages/tea-list-page.dart';
@@ -13,22 +14,33 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Tea App',
       home: new HomePage(key: _homeStateKey),
-      theme: new ThemeData(
-        cardColor: Colors.white,
-        dividerColor: Colors.grey,
-        iconTheme: new IconThemeData(color: Colors.black),
-        primaryColor: Colors.black,
-        tabBarTheme: new TabBarTheme(
-            labelColor: Colors.orange,
-            unselectedLabelColor: Colors.grey,
-            indicator:
-                UnderlineTabIndicator(borderSide: BorderSide(width: 0.0))),
-        buttonTheme: ButtonThemeData(buttonColor: Colors.redAccent),
-        accentColor: Colors.redAccent,
-        textTheme: TextTheme(
-          subtitle: TextStyle(fontStyle: FontStyle.italic),
-          title: TextStyle(fontWeight: FontWeight.bold),
-        ),
+      theme: getThemeData(),
+      initialRoute: '/teas',
+      routes: <String, WidgetBuilder>{
+        '/favorites': (BuildContext context) => new FirstTab(),
+        '/teas': (BuildContext context) => new TeaPage(),
+        '/account': (BuildContext context) => new ThirdTab(),
+        '/settings': (BuildContext context) => new FirstTab(),
+      },
+    );
+  }
+
+  ThemeData getThemeData() {
+    return new ThemeData(
+      cardColor: Colors.white,
+      dividerColor: Colors.grey,
+      iconTheme: new IconThemeData(color: Colors.black),
+      primaryColor: Colors.black,
+      bottomAppBarColor: Colors.orange,
+      tabBarTheme: new TabBarTheme(
+          labelColor: Colors.orange,
+          unselectedLabelColor: Colors.grey,
+          indicator: UnderlineTabIndicator(borderSide: BorderSide(width: 0.0))),
+      buttonTheme: ButtonThemeData(buttonColor: Colors.redAccent),
+      accentColor: Colors.redAccent,
+      textTheme: TextTheme(
+        subtitle: TextStyle(fontStyle: FontStyle.italic),
+        title: TextStyle(fontWeight: FontWeight.bold),
       ),
     );
   }
@@ -48,10 +60,14 @@ class HomePage extends StatefulWidget {
 }
 
 class HomeState extends State<HomePage> with SingleTickerProviderStateMixin {
-  TabController controller;
+  TabController _pageController;
+  int _currentIndex = 0;
+  List<int> _history = [0];
+
   final List<Widget> _childrenTabs = [
     new FirstTab(),
     new TeaPage(),
+    new ThirdTab(),
     new ThirdTab(),
   ];
 
@@ -60,13 +76,14 @@ class HomeState extends State<HomePage> with SingleTickerProviderStateMixin {
     super.initState();
 
     // Initialize the Tab Controller
-    controller = new TabController(length: _childrenTabs.length, vsync: this);
+    _pageController =
+        new TabController(length: _childrenTabs.length, vsync: this);
   }
 
   @override
   void dispose() {
     // Dispose of the Tab Controller
-    controller.dispose();
+    _pageController.dispose();
     super.dispose();
   }
 
@@ -83,29 +100,93 @@ class HomeState extends State<HomePage> with SingleTickerProviderStateMixin {
       // Set the TabBar view as the body of the Scaffold
       body: new TabBarView(
         children: _childrenTabs,
-        controller: controller,
+        controller: _pageController,
       ),
-      // Set the bottom navigation bar
-      bottomNavigationBar: new Container(
-        foregroundDecoration: BoxDecoration(
-            border: Border(top: BorderSide(width: 1.0, color: Colors.grey))),
-        child: new TabBar(
-          tabs: <Tab>[
-            new Tab(
-              // set icon to the tab
-              icon: new Icon(Icons.favorite),
-              text: 'Favorites',
-            ),
-            new Tab(
-              icon: new Icon(Icons.landscape),
-              text: 'Teas',
-            ),
-            new Tab(
-                icon: new Icon(Icons.supervised_user_circle), text: 'Account'),
-          ],
-          // setup the controller
-          controller: controller,
+      bottomNavigationBar: getBottomNavigationBarTap(),
+      /*new CupertinoTabBar(
+        currentIndex: _currentIndex,
+        onTap: (int index) {
+          Navigator.pushNamed(context, '/favorites');
+        },
+        items: <BottomNavigationBarItem>[
+          new BottomNavigationBarItem(
+            icon: new Icon(Icons.favorite),
+            title: new Text('Favorites'),
+          ),
+          new BottomNavigationBarItem(
+            icon: new Icon(Icons.landscape),
+            title: new Text('Teas'),
+          ),
+          new BottomNavigationBarItem(
+            icon: new Icon(Icons.supervised_user_circle),
+            title: new Text('Account'),
+          ),
+          new BottomNavigationBarItem(
+            icon: new Icon(Icons.settings),
+            title: new Text('Settings'),
+          ),
+        ],
+      ),*/
+    );
+  }
+
+  Widget getBottomNavigationBar() {
+    return new BottomNavigationBar(
+      currentIndex: _currentIndex,
+      onTap: (int index) {
+        Navigator.push(
+            context,
+            new MaterialPageRoute(
+                builder: (BuildContext context) => new FirstTab()));
+//        Navigator.pushNamed(context, '/favorites');
+      },
+      items: <BottomNavigationBarItem>[
+        new BottomNavigationBarItem(
+          icon: new Icon(Icons.favorite),
+          title: new Text('Favorites'),
         ),
+        new BottomNavigationBarItem(
+          icon: new Icon(Icons.landscape),
+          title: new Text('Teas'),
+        ),
+        new BottomNavigationBarItem(
+          icon: new Icon(Icons.supervised_user_circle),
+          title: new Text('Account'),
+        ),
+        new BottomNavigationBarItem(
+          icon: new Icon(Icons.settings),
+          title: new Text('Settings'),
+        ),
+      ],
+      fixedColor: Colors.black,
+    );
+  }
+
+  Widget getBottomNavigationBarTap() {
+    return new Container(
+      foregroundDecoration: BoxDecoration(
+          border: Border(top: BorderSide(width: 1.0, color: Colors.grey))),
+      child: new TabBar(
+        tabs: <Tab>[
+          new Tab(
+            icon: new Icon(Icons.favorite),
+            text: 'Favorites',
+          ),
+          new Tab(
+            icon: new Icon(Icons.landscape),
+            text: 'Teas',
+          ),
+          new Tab(
+            icon: new Icon(Icons.supervised_user_circle),
+            text: 'Account',
+          ),
+          new Tab(
+            icon: new Icon(Icons.settings),
+            text: 'Settings',
+          ),
+        ],
+        // setup the controller
+        controller: _pageController,
       ),
     );
   }

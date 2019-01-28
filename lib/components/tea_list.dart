@@ -10,11 +10,19 @@ class TeaList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new ListView(
+      padding: EdgeInsets.symmetric(vertical: 15.0),
       children: _buildTeasList(),
     );
   }
 
-  List<TeaListItem> _buildTeasList() {
-    return _teaModal.map((tea) => new TeaListItem(tea)).toList();
+  List<Card> _buildTeasList() {
+    return _teaModal
+        .map((item) => new Card(
+              child: new TeaListItem(item),
+              color: Colors.white,
+              margin: EdgeInsets.all(0.25),
+              shape: new Border.all(style: BorderStyle.none),
+            ))
+        .toList();
   }
 }
