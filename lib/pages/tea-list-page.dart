@@ -1,51 +1,60 @@
 import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'package:tea_app/service/api.dart';
+
 import 'package:tea_app/components/tea_list.dart';
 import 'package:tea_app/modals/tea.dart';
 
-class TeaPage extends StatelessWidget {
-  _buildTeaList() {
-    return <TeaModal>[
-      const TeaModal(
-        name: 'Moringa Mermaid',
-        brand: 'Davids tea',
-        receipt: 1,
-        image: 'https://www.adagio.com/images5/products_index/dragon_pearl.jpg',
-      ),
-      const TeaModal(
-          name: 'irish_breakfast',
-          brand: 'Brand',
-          receipt: 2,
-          image:
-              'https://www.adagio.com/images5/products_index/irish_breakfast.jpg'),
-      const TeaModal(
-          name: 'earl_grey_bella_luna',
-          brand: 'Brand',
-          receipt: 5,
-          image:
-              'https://www.adagio.com/images5/products_index/earl_grey_bella_luna.jpg'),
-      const TeaModal(
-          name: 'golden_monkey',
-          brand: 'Brand',
-          receipt: 55,
-          image:
-              'https://www.adagio.com/images5/products_index/golden_monkey.jpg'),
-      const TeaModal(
-          name: 'honeybush_banana_nut',
-          brand: 'Brand',
-          receipt: 15,
-          image:
-              'https://www.adagio.com/images5/products_index/honeybush_banana_nut.jpg'),
-      const TeaModal(
-          name: 'peppermint',
-          brand: 'Brand',
-          receipt: 11,
-          image:
-              'https://www.adagio.com/images5/products_index/peppermint.jpg'),
-    ];
+class TeaPage extends StatefulWidget {
+  @override
+  createState() => _TeaPageState();
+}
+
+class _TeaPageState extends State {
+  var _teaList = new List<Tea>();
+  var _brand = '';
+
+  _getTeas() {
+    API.getTeas().then((response) {
+      setState(() {
+        Iterable list = json.decode(response.body);
+        _teaList = list.map((model) => Tea.fromJson(model)).toList();
+
+        /* todo: remove duplicate item */
+        _brand = _teaList[0].brand;
+        _teaList.addAll(list.map((model) => Tea.fromJson(model)).toList());
+        _teaList.addAll(list.map((model) => Tea.fromJson(model)).toList());
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _getTeas();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(body: new TeaList(_buildTeaList()));
+    return new Scaffold(
+      appBar: AppBar(
+        title: new Text(_brand),
+        textTheme: TextTheme(
+            title: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.w500,
+                fontSize: 18.0)),
+        backgroundColor: Colors.white,
+        centerTitle: true,
+      ),
+      body: Center(
+        child: new TeaList(_teaList),
+      ),
+    );
   }
 }

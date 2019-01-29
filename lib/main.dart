@@ -4,7 +4,23 @@ import 'package:tea_app/pages/first.dart';
 import 'package:tea_app/pages/tea-list-page.dart';
 import 'package:tea_app/pages/third.dart';
 
+import 'package:tea_app/modals/tea.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
 void main() => runApp(MyApp());
+
+Future<Tea> fetchList() async {
+  final response = await http.get('http://35.244.186.94/teas');
+
+  if (response.statusCode == 200) {
+    // If the call to the server was successful, parse the JSON
+    return json.decode(response.body);
+  } else {
+    // If that call was not successful, throw an error.
+    throw Exception('Failed to load post');
+  }
+}
 
 class MyApp extends StatelessWidget {
   static final _homeStateKey = new GlobalKey<HomeState>();
@@ -90,13 +106,13 @@ class HomeState extends State<HomePage> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      appBar: new AppBar(
+      /*appBar: new AppBar(
         title: new Text(
           "Tea Application",
           style: TextStyle(color: Colors.black),
         ),
         backgroundColor: Colors.white,
-      ),
+      ),*/
       // Set the TabBar view as the body of the Scaffold
       body: new TabBarView(
         children: _childrenTabs,

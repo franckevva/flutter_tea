@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tea_app/modals/tea.dart';
 
 class TeaDetailPage extends StatelessWidget {
-  final TeaModal tea;
+  final Tea tea;
 
   TeaDetailPage({Key key, @required this.tea}) : super(key: key);
 
@@ -10,18 +10,20 @@ class TeaDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return new Scaffold(
         appBar: AppBar(
-          title: new Column(children: <Widget>[
-            new Text(
-              '${tea.name}',
-              textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.black),
-            ),
-            new Text(
-              '${tea.brand} | ${tea.receipt} recipes',
-              textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.black, fontSize: 10.0),
-            ),
-          ]),
+          title: new Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                new Text(
+                  '${tea.name}',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: Colors.black),
+                ),
+                new Text(
+                  '${tea.brand} | ${tea.receipt} recipes',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: Colors.black, fontSize: 10.0),
+                ),
+              ]),
           centerTitle: true,
           iconTheme: IconThemeData(
             color: Colors.black, //change your color here
@@ -47,8 +49,7 @@ class TeaDetailPage extends StatelessWidget {
                           new Text(
                             'Original Recipe',
                             style: TextStyle(
-                                fontSize: 25.0,
-                                fontWeight: FontWeight.bold),
+                                fontSize: 25.0, fontWeight: FontWeight.bold),
                           ),
                           new OutlineButton(
                             onPressed: () => {},
@@ -125,7 +126,7 @@ class TeaDetailPage extends StatelessWidget {
                       ),
                     ),
                   ]),
-                  new Image.network(tea.image),
+                  new Image.network(tea.mediaUrl),
                 ],
               ),
             ),

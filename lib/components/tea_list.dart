@@ -3,7 +3,7 @@ import 'package:tea_app/modals/tea.dart';
 import 'package:tea_app/components/tea_list_item.dart';
 
 class TeaList extends StatelessWidget {
-  final List<TeaModal> _teaModal;
+  final List<Tea> _teaModal;
 
   TeaList(this._teaModal);
 

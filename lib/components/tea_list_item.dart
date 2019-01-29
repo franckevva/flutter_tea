@@ -3,7 +3,7 @@ import 'package:tea_app/modals/tea.dart';
 import 'package:tea_app/pages/tea-detail-page.dart';
 
 class TeaListItem extends StatelessWidget {
-  final TeaModal _teaModal;
+  final Tea _teaModal;
 
   TeaListItem(this._teaModal);
 
@@ -12,7 +12,7 @@ class TeaListItem extends StatelessWidget {
     return new ListTile(
         contentPadding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
         leading: new CircleAvatar(
-          backgroundImage: new NetworkImage(_teaModal.image),
+          backgroundImage: new NetworkImage(_teaModal.mediaUrl),
           radius: 35,
         ),
         title: new Text(
