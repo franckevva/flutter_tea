@@ -52,7 +52,8 @@ class MyApp extends StatelessWidget {
           labelColor: Colors.orange,
           unselectedLabelColor: Colors.grey,
           indicator: UnderlineTabIndicator(borderSide: BorderSide(width: 0.0))),
-      buttonTheme: ButtonThemeData(buttonColor: Colors.redAccent),
+      buttonTheme: ButtonThemeData(
+          textTheme: ButtonTextTheme.accent),
       accentColor: Colors.redAccent,
       textTheme: TextTheme(
         subtitle: TextStyle(fontStyle: FontStyle.italic),

@@ -29,6 +29,5 @@ class TeaListItem extends StatelessWidget {
               MaterialPageRoute(
                   builder: (context) => TeaDetailPage(tea: _teaModal)),
             ));
-//      contentPadding: EdgeInsets.all(1.0),
   }
 }
