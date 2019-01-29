@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tea_app/modals/tea.dart';
-import 'package:tea_app/pages/tea-detail-page.dart';
+import 'package:tea_app/pages/tea_detail.dart';
 
 class TeaListItem extends StatelessWidget {
   final Tea _teaModal;
