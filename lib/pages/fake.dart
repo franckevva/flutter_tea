@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+/* placeholder page for Favorites, Accounts and Settings  */
 class FakePage extends StatelessWidget {
   final String _title;
 

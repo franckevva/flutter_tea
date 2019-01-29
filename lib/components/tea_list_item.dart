@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:tea_app/modals/tea.dart';
 import 'package:tea_app/pages/tea_detail.dart';
 
@@ -20,10 +21,13 @@ class TeaListItem extends StatelessWidget {
           style: new TextStyle(fontWeight: FontWeight.w500),
         ),
         subtitle: new Text(
-          _teaModal.receipt.toString() + ' recipes',
+          '${_teaModal.receipt.toString()} recipes',
           style: TextStyle(fontStyle: FontStyle.italic),
         ),
-        trailing: new Icon(Icons.arrow_forward_ios, size: 18.0,),
+        trailing: new Icon(
+          Icons.arrow_forward_ios,
+          size: 18.0,
+        ),
         onTap: () => Navigator.push(
               context,
               MaterialPageRoute(

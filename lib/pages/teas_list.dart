@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
-import 'package:tea_app/service/api.dart';
 
+import 'package:tea_app/service/api.dart';
 import 'package:tea_app/components/tea_list.dart';
 import 'package:tea_app/modals/tea.dart';
 
-class TeaPage extends StatefulWidget {
+class TeaListPage extends StatefulWidget {
   @override
-  createState() => _TeaPageState();
+  createState() => _TeaListPageState();
 }
 
-class _TeaPageState extends State {
+class _TeaListPageState extends State {
   var _teaList = new List<Tea>();
   var _brand = '';
 
