@@ -7,25 +7,57 @@ import 'package:tea_app/modals/tea.dart';
 
 const baseUrl = 'http://35.244.186.94/';
 
-class API {
-  static Future<List<Tea>> getTeas() async {
-    final response = await http.get('$baseUrl/teas');
+class ApiService {
+  /* storage teaList on memory for test;
+  *  in future it possible to storage data on db with sqflite package,
+  *  as example
+  * */
+  List<Tea> _teaList = new List<Tea>();
+  String _lastModified = '';
+  bool _isNotInit = true;
+
+  static final ApiService _api = new ApiService();
+
+  static ApiService get() {
+    return _api;
+  }
+
+  Future<List<Tea>> getTeas() async {
+    final headers = {
+      'Content-Type': 'application/json',
+    };
+
+    if (_isNotInit || _lastModified.isNotEmpty) {
+      headers['If-Modified-Since'] = _lastModified;
+      _isNotInit = false;
+    }
+
+    final response = await http.get('$baseUrl/teas', headers: headers);
+
+    if (response.headers.containsKey('last-modified')) {
+      _lastModified = response.headers['last-modified'];
+    }
 
     if (response.statusCode == 200) {
+      /* can be processing 304 status code,
+      * when data didn't change from last time
+      * depended on server realisation
+      * */
       final list = json.decode(response.body);
-      final List<Tea> teaList =
-          list.map<Tea>((model) => Tea.fromJson(model)).toList();
+      _teaList.addAll(list.map<Tea>((model) => Tea.fromJson(model)).toList());
 
       /* todo: remove duplicate item */
-      teaList.addAll(list.map<Tea>((model) => Tea.fromJson(model)).toList());
-      teaList.addAll(list.map<Tea>((model) => Tea.fromJson(model)).toList());
+      /* added more data for example */
+      _teaList.addAll(list.map<Tea>((model) => Tea.fromJson(model)).toList());
+      _teaList.addAll(list.map<Tea>((model) => Tea.fromJson(model)).toList());
 
-      return teaList;
+      return _teaList;
     } else {
       throw Exception('Failed to load teas');
     }
   }
 
+  /* fake data for community list on tea details page */
   static getCommunityRecipes() {
     return <Recipes>[
       new Recipes('Justin Seal', true,
@@ -41,6 +73,7 @@ class API {
     ];
   }
 
+  /* fake data for part of tea details page */
   static getOriginalRecipe() {
     return <Recipes>[
       new Recipes('Teaforis', true,

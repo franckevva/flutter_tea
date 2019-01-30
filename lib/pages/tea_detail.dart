@@ -10,11 +10,11 @@ class TeaDetailPage extends StatelessWidget {
   TeaDetailPage({Key key, @required this.tea}) : super(key: key);
 
   _getCommunityRecipes() {
-    return API.getCommunityRecipes();
+    return ApiService.getCommunityRecipes();
   }
 
   _getOriginalRecipe() {
-    return API.getOriginalRecipe();
+    return ApiService.getOriginalRecipe();
   }
 
   @override

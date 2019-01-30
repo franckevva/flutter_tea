@@ -16,7 +16,7 @@ class _TeaListPageState extends State {
   @override
   void initState() {
     super.initState();
-    _teaList = API.getTeas();
+    _teaList = ApiService.get().getTeas();
   }
 
   @override
