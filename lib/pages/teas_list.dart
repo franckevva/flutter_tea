@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:tea_app/service/api.dart';
+import 'package:tea_app/services/api.dart';
 import 'package:tea_app/components/tea_list.dart';
 import 'package:tea_app/modals/tea.dart';
 

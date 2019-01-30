@@ -14,7 +14,6 @@ class ApiService {
   * */
   List<Tea> _teaList = new List<Tea>();
   String _lastModified = '';
-  bool _isNotInit = true;
 
   static final ApiService _api = new ApiService();
 
@@ -27,9 +26,8 @@ class ApiService {
       'Content-Type': 'application/json',
     };
 
-    if (_isNotInit || _lastModified.isNotEmpty) {
+    if (_lastModified.isNotEmpty) {
       headers['If-Modified-Since'] = _lastModified;
-      _isNotInit = false;
     }
 
     final response = await http.get('$baseUrl/teas', headers: headers);
