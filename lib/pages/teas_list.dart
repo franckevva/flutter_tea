@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:convert';
 
 import 'package:tea_app/service/api.dart';
 import 'package:tea_app/components/tea_list.dart';
@@ -11,27 +10,13 @@ class TeaListPage extends StatefulWidget {
 }
 
 class _TeaListPageState extends State {
-  var _teaList = new List<Tea>();
-  var _brand = '';
-
-  _getTeas() {
-    API.getTeas().then((response) {
-      setState(() {
-        Iterable list = json.decode(response.body);
-        _teaList = list.map((model) => Tea.fromJson(model)).toList();
-
-        /* todo: remove duplicate item */
-        _brand = _teaList[0].brand;
-        _teaList.addAll(list.map((model) => Tea.fromJson(model)).toList());
-        _teaList.addAll(list.map((model) => Tea.fromJson(model)).toList());
-      });
-    });
-  }
+  Future<List<Tea>> _teaList;
+  final _brand = 'Adagio'; // fake brand name
 
   @override
   void initState() {
     super.initState();
-    _getTeas();
+    _teaList = API.getTeas();
   }
 
   @override
@@ -53,7 +38,16 @@ class _TeaListPageState extends State {
         centerTitle: true,
       ),
       body: Center(
-        child: new TeaList(_teaList),
+        child: FutureBuilder<List<Tea>>(
+            future: _teaList,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return new TeaList(snapshot.data);
+              } else if (snapshot.hasError) {
+                return new Text('Ooop... ${snapshot.error}');
+              }
+              return CircularProgressIndicator();
+            }),
       ),
     );
   }

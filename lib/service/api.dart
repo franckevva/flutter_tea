@@ -1,13 +1,29 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 import 'package:tea_app/modals/recipes.dart';
+import 'package:tea_app/modals/tea.dart';
 
 const baseUrl = 'http://35.244.186.94/';
 
 class API {
-  static Future getTeas() {
-    return http.get(baseUrl + '/teas');
+  static Future<List<Tea>> getTeas() async {
+    final response = await http.get('$baseUrl/teas');
+
+    if (response.statusCode == 200) {
+      final list = json.decode(response.body);
+      final List<Tea> teaList =
+          list.map<Tea>((model) => Tea.fromJson(model)).toList();
+
+      /* todo: remove duplicate item */
+      teaList.addAll(list.map<Tea>((model) => Tea.fromJson(model)).toList());
+      teaList.addAll(list.map<Tea>((model) => Tea.fromJson(model)).toList());
+
+      return teaList;
+    } else {
+      throw Exception('Failed to load teas');
+    }
   }
 
   static getCommunityRecipes() {
