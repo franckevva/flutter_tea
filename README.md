@@ -27,12 +27,15 @@ by parameters such as *brand, categories* and other.
     - main.dart
     - styles.dart
     
-### Build
+#### Build
 For build project follow next guid:
  - [Android](https://flutter.io/docs/deployment/android)
  - [iOS](https://flutter.io/docs/deployment/ios) 
  
- ### Config
+ #### Config
  For config can be used the principles of [flavors for Flutter](https://flutter.io/docs/deployment/flavors)
+ 
+ #### Testing
+ [Guid for testing](https://flutter.io/docs/testing)
  
  
