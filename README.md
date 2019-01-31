@@ -1,7 +1,8 @@
 # Adagio Teas App
 
 Adagio Teas application.
-![Preview](/assets/images/preview.gif =200x300)
+
+<img src="/assets/images/preview.gif" height="450" width="300">
 
 ### Flutter packages
 - http *(http requests)*
