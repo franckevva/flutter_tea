@@ -26,7 +26,7 @@ class TeaDetailPage extends StatelessWidget {
               children: <Widget>[
                 new Text(
                   '${tea.name}',
-                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18.0),
+                  style: TextStyle(fontSize: 18.0),
                 ),
                 new Text(
                   '${tea.brand} | ${tea.receipt} recipes',
@@ -34,9 +34,9 @@ class TeaDetailPage extends StatelessWidget {
                 ),
               ]),
           centerTitle: true,
-          iconTheme: IconThemeData(color: Colors.black),
-          backgroundColor: Colors.white,
-          textTheme: TextTheme(title: TextStyle(color: Colors.black)),
+          iconTheme: Theme.of(context).iconTheme,
+          backgroundColor: Theme.of(context).backgroundColor,
+          textTheme: Theme.of(context).textTheme,
         ),
         body: new SingleChildScrollView(
           child: new Column(

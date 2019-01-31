@@ -18,11 +18,11 @@ class TeaListItem extends StatelessWidget {
         ),
         title: new Text(
           _teaModal.name,
-          style: new TextStyle(fontWeight: FontWeight.w500),
+          style: TextStyle(fontWeight: Theme.of(context).textTheme.title.fontWeight),
         ),
         subtitle: new Text(
           '${_teaModal.receipt.toString()} recipes',
-          style: TextStyle(fontStyle: FontStyle.italic),
+          style: Theme.of(context).textTheme.subtitle,
         ),
         trailing: new Icon(
           Icons.arrow_forward_ios,

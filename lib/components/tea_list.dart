@@ -12,15 +12,15 @@ class TeaList extends StatelessWidget {
   Widget build(BuildContext context) {
     return new ListView(
       padding: EdgeInsets.symmetric(vertical: 15.0),
-      children: _buildTeasList(),
+      children: _buildTeasList(context),
     );
   }
 
-  List<Card> _buildTeasList() {
+  List<Card> _buildTeasList(context) {
     return _teaModal
         .map((item) => new Card(
               child: new TeaListItem(item),
-              color: Colors.white,
+              color: Theme.of(context).cardColor,
               margin: EdgeInsets.all(0.25),
               shape: new Border.all(style: BorderStyle.none),
             ))

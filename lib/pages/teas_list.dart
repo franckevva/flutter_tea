@@ -29,12 +29,8 @@ class _TeaListPageState extends State {
     return new Scaffold(
       appBar: AppBar(
         title: new Text(_brand),
-        textTheme: TextTheme(
-            title: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.w500,
-                fontSize: 18.0)),
-        backgroundColor: Colors.white,
+        textTheme: Theme.of(context).textTheme,
+        backgroundColor: Theme.of(context).backgroundColor,
         centerTitle: true,
       ),
       body: Center(

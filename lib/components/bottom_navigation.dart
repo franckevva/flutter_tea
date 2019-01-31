@@ -9,8 +9,8 @@ class BottomNavigation extends StatelessWidget {
   Widget build(BuildContext context) {
     return new Container(
       decoration: BoxDecoration(
-          color: Colors.white,
-          border: Border(top: BorderSide(width: 1.0, color: Colors.grey[300]))),
+          color: Theme.of(context).backgroundColor,
+          border: Border(top: BorderSide(width: 1.0, color: Theme.of(context).dividerColor))),
       child: new TabBar(
         tabs: <Tab>[
           new Tab(

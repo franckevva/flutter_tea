@@ -18,11 +18,11 @@ class RecipesListItem extends StatelessWidget {
       ),
       title: new Text(
         'by ${_item.name}',
-        style: TextStyle(fontWeight: FontWeight.w500),
+        style: TextStyle(fontWeight: Theme.of(context).textTheme.title.fontWeight),
       ),
       subtitle: new Text(
         'used ${_item.countOfUsed} times',
-        style: TextStyle(fontStyle: FontStyle.italic),
+        style: Theme.of(context).textTheme.subtitle,
       ),
       trailing: _item.star ? new Icon(Icons.star) : null,
     );
